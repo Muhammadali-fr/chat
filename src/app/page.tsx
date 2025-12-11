@@ -1,7 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { generateAnimalUsername } from "./components/Generateusername";
+import { generateAnimalUsername } from "../components/Generateusername";
+import { useMutation } from "@tanstack/react-query";
+import { client } from "@/lib/client";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -24,6 +26,12 @@ export default function Home() {
     main();
   }, []);
 
+  const {mutate: createRoom} = useMutation({
+    mutationFn: async () => {
+      const res = await client.room.create.post();
+    }
+  })
+
 
   return (
     <div className="w-full min-h-screen flex flex-col gap-5 items-center justify-center bg-gray-100">
@@ -43,7 +51,7 @@ export default function Home() {
           />
         </label>
 
-        <button className="w-full h-12 bg-black text-white rounded-2xl font-semibold hover:bg-gray-800 transition cursor-pointer">
+        <button onClick={() => createRoom()} className="w-full h-12 bg-black text-white rounded-2xl font-semibold hover:bg-gray-800 transition cursor-pointer">
           CREATE SECURE ROOM
         </button>
       </div>
