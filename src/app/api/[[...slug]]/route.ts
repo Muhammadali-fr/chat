@@ -17,8 +17,15 @@ const room = new Elysia({ prefix: '/room' })
         return { roomId };
     })
 
-const message = new Elysia({ prefix: "/messages" }).use(authMiddleware).post("/", ({ body, auth }) => {
+const message = new Elysia({ prefix: "/messages" }).use(authMiddleware).post("/", async ({ body, auth }) => {
     const { sender, text } = body;
+
+    const { roomId } = auth;
+
+    const roomExists = await redis.exists(`meta:${roomId}`);
+    if (!roomExists) {
+        throw new Error("Room does not exist.");
+    };
 
 }, {
     query: z.object({ roomId: z.string() }),
