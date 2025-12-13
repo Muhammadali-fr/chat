@@ -3,12 +3,13 @@ import { useMutation } from "@tanstack/react-query";
 import { client } from "@/lib/client";
 import { useRouter } from "next/navigation";
 import { useUsername } from "@/hooks/use-username";
+import ButtonLoader from "@/components/loaders/ButtonLoader";
 
 export default function Home() {
   const router = useRouter();
-const {username} = useUsername();
+  const { username } = useUsername();
 
-  const { mutate: createRoom } = useMutation({
+  const { mutate: createRoom, isPending } = useMutation({
     mutationFn: async () => {
       return await client.room.create.post();
     },
@@ -37,9 +38,10 @@ const {username} = useUsername();
         </label>
 
         <button
-         onClick={() => createRoom()} 
-         className="w-full h-12 bg-black text-white rounded-2xl font-semibold hover:bg-gray-800 transition cursor-pointer">
-          CREATE SECURE ROOM
+        disabled={isPending}
+          onClick={() => createRoom()}
+          className="w-full h-12 bg-black text-white rounded-2xl font-semibold hover:bg-gray-800 transition cursor-pointer disabled:bg-gray-700 flex items-center justify-center">
+          {isPending ? <ButtonLoader /> : "CREATE SECURE ROOM"}
         </button>
       </div>
     </div>
