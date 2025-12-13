@@ -1,32 +1,12 @@
-"use client"
-
-import { useEffect, useState } from "react";
-import { generateAnimalUsername } from "../components/Generateusername";
+'use client'
 import { useMutation } from "@tanstack/react-query";
 import { client } from "@/lib/client";
 import { useRouter } from "next/navigation";
+import { useUsername } from "@/hooks/use-username";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
-  const STORAGE_KEY = "username_key";
   const router = useRouter();
-
-  useEffect(() => {
-    const main = () => {
-      const stored = localStorage.getItem(STORAGE_KEY);
-
-      if (stored) {
-        setUsername(stored);
-        return
-      }
-
-      const generated = generateAnimalUsername();
-      localStorage.setItem(STORAGE_KEY, generated);
-      setUsername(generated);
-    };
-
-    main();
-  }, []);
+const {username} = useUsername();
 
   const { mutate: createRoom } = useMutation({
     mutationFn: async () => {
@@ -56,7 +36,9 @@ export default function Home() {
           />
         </label>
 
-        <button onClick={() => createRoom()} className="w-full h-12 bg-black text-white rounded-2xl font-semibold hover:bg-gray-800 transition cursor-pointer">
+        <button
+         onClick={() => createRoom()} 
+         className="w-full h-12 bg-black text-white rounded-2xl font-semibold hover:bg-gray-800 transition cursor-pointer">
           CREATE SECURE ROOM
         </button>
       </div>
