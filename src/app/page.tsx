@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <div className="w-full min-h-screen flex flex-col gap-5 items-center justify-center bg-gray-100">
       <div className="text-center">
-        <p className="text-3xl font-bold">{">"}Private Chat</p>
+        <p className="text-3xl font-bold"><span className="text-[#34C759]">{">"}</span>Private Chat</p>
         <p className="text-sm text-gray-500">A private, self-destructing chat room.</p>
       </div>
       <div className="w-full max-w-sm bg-white rounded-2xl p-6 flex flex-col gap-4">
@@ -40,7 +40,7 @@ export default function Home() {
         <button
         disabled={isPending}
           onClick={() => createRoom()}
-          className="w-full h-12 bg-black text-white rounded-2xl font-semibold hover:bg-gray-800 transition cursor-pointer disabled:bg-gray-700 flex items-center justify-center">
+          className="w-full h-12 bg-[#34C759] text-white rounded-2xl font-semibold hover:bg-[#45d769] transition cursor-pointer disabled:bg-zinc-300 flex items-center justify-center">
           {isPending ? <ButtonLoader /> : "CREATE SECURE ROOM"}
         </button>
       </div>
