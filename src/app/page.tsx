@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { generateAnimalUsername } from "../components/Generateusername";
 import { useMutation } from "@tanstack/react-query";
 import { client } from "@/lib/client";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [username, setUsername] = useState("");
   const STORAGE_KEY = "username_key";
+  const router = useRouter();
 
   useEffect(() => {
     const main = () => {
@@ -26,9 +28,12 @@ export default function Home() {
     main();
   }, []);
 
-  const {mutate: createRoom} = useMutation({
+  const { mutate: createRoom } = useMutation({
     mutationFn: async () => {
-      const res = await client.room.create.post();
+      return await client.room.create.post();
+    },
+    onSuccess: (res) => {
+      router.push(`/room/${res.data?.roomId}`)
     }
   })
 
