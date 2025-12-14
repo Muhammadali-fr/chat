@@ -7,6 +7,7 @@ import { useUsername } from "@/hooks/use-username";
 import ButtonLoader from "@/components/loaders/ButtonLoader";
 import { Users, AlertTriangle, ArrowRight } from "lucide-react";
 import { Suspense, useState } from "react";
+import Link from "next/link";
 
 const Page = () => {
   return <Suspense>
@@ -175,6 +176,8 @@ function Lobby() {
           </button>
         </div>
       )}
+
+      <div className="text-sm absolute bottom-5">Created by <Link className="text-blue-600 underline" target="_blank" href={"https://github.com/Muhammadali-fr"}>Muhammadali</Link>.</div>
     </div>
   );
 }
