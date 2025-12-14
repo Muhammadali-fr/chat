@@ -6,9 +6,18 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useUsername } from "@/hooks/use-username";
 import ButtonLoader from "@/components/loaders/ButtonLoader";
 import { Users, AlertTriangle, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
-export default function Home() {
+const Page = () => {
+  return <Suspense>
+    <Lobby />
+  </Suspense>
+}
+
+export default Page;
+
+
+function Lobby() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
