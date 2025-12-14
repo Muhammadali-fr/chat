@@ -1,5 +1,9 @@
 import { treaty } from '@elysiajs/eden'
 import type { app } from '@/app/api/[[...slug]]/route'
 
-// this require .api to enter /api prefix
-export const client = treaty<app>('localhost:3000').api
+const baseURL =
+  typeof window === 'undefined'
+    ? 'http://localhost:3000'
+    : window.location.origin
+
+export const client = treaty<app>(baseURL).api
